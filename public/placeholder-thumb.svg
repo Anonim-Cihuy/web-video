@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="Tidak ada thumbnail">
+  <rect width="640" height="360" fill="#17171c"/>
+  <g fill="none" stroke="#e0a23b" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" opacity="0.85">
+    <rect x="248" y="118" width="144" height="124" rx="14"/>
+    <path d="M304 158 L356 180 L304 202 Z" fill="#e0a23b" stroke="none"/>
+  </g>
+  <text x="320" y="292" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="26" fill="#9a978e">Web Video</text>
+</svg>

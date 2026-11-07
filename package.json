@@ -1,5 +1,5 @@
 {
-  "name": "web-video-scaffold",
+  "name": "web-video",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@next/swc-win32-x64-msvc": "^16.4.5",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.119.0",
     "next": "16.4.5",
+    "next-themes": "^0.4.6",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
