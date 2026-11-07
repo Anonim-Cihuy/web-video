@@ -1,9 +1,12 @@
 import { createClient } from "@/lib/supabase/server";
 
-// Thumbnail manual disimpan sebagai commit di repo GitHub publik,
-// variable env GITHUB_REPO="owner/repo" + GITHUB_TOKEN (fine-grained,
-// Contents: Read and Write). Batas Contents API = 1 MB per file.
+// Thumbnail manual disimpan sebagai commit di repo GitHub (satu repo dengan
+// situs) tapi di branch media — commit ke main akan memicu redeploy Vercel.
+// Env: GITHUB_REPO="Anonim-Cihuy/web-video" + GITHUB_TOKEN (fine-grained,
+// Contents: Read and Write), branch media dibuat sekali di awal.
+// Batas Contents API = 1 MB per file.
 const MAX_BYTES = 1000 * 1024;
+const BRANCH = "media";
 
 const EXT: Record<string, string> = {
   "image/png": "png",
@@ -81,6 +84,7 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         message: "thumbnail via admin",
         content: Buffer.from(await file.arrayBuffer()).toString("base64"),
+        branch: BRANCH,
       }),
       signal: AbortSignal.timeout(30_000),
     });
@@ -104,7 +108,7 @@ export async function POST(request: Request) {
 
   return Response.json({
     success: true,
-    // Commit baru ke default branch; raw.githubusercontent hotlink aman utk gambar.
-    url: `https://raw.githubusercontent.com/${repo}/main/${path}`,
+    // Commit ke branch media (bukan default main) supaya Vercel tidak re-deploy.
+    url: `https://raw.githubusercontent.com/${repo}/${BRANCH}/${path}`,
   });
 }
