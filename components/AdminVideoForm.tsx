@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import type { AdminActionState, Category } from "@/lib/types";
+import ThumbnailInput from "./ThumbnailInput";
 
 type Defaults = {
   title?: string;
@@ -63,8 +64,7 @@ export default function AdminVideoForm({
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="thumbnail_url" className={label}>URL thumbnail</label>
-        <input id="thumbnail_url" name="thumbnail_url" type="url" defaultValue={defaults.thumbnail_url} className={input} placeholder="https://... (otomatis untuk anonmp4)" />
+        <ThumbnailInput defaultValue={defaults.thumbnail_url} />
       </div>
 
       <div className="flex flex-col gap-1.5">
