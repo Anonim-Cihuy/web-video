@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 
-export const maxDuration = 3600;
+// Batas Hobby plan = 300s; lebih dari itu deploy Vercel gagal
+export const maxDuration = 300;
 
 const UPSTREAM = "https://anonmp4api.xyz/upload";
 
@@ -38,7 +39,7 @@ export async function POST(request: Request) {
       // @ts-expect-error undici butuh duplex untuk body streaming
       duplex: "half",
       body: request.body,
-      signal: AbortSignal.timeout(30 * 60 * 1000),
+      signal: AbortSignal.timeout((300 - 5) * 1000), // 5s di bawah maxDuration biar error-nya JSON, bukan hard kill
     });
   } catch (e) {
     return Response.json(
