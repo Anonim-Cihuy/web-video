@@ -32,7 +32,8 @@ export async function POST(request: Request) {
     );
   }
 
-  const repo = process.env.GITHUB_REPO;
+  // Repo default = repo situs ini (satuin); masih bisa dioverride via env.
+  const repo = process.env.GITHUB_REPO || "Anonim-Cihuy/web-video";
   const token = process.env.GITHUB_TOKEN;
   if (!repo || !token) {
     return Response.json(
