@@ -21,12 +21,6 @@ export default function Navbar() {
           </Suspense>
         </div>
         <nav className="order-2 ml-auto flex items-center gap-2 sm:order-3 sm:ml-0" aria-label="Navigasi utama">
-          <Link
-            href="/admin"
-            className="inline-flex h-11 items-center rounded-lg px-3 text-sm font-medium text-muted transition-colors hover:text-foreground"
-          >
-            Admin
-          </Link>
           <ThemeToggle />
         </nav>
       </div>
