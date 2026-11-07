@@ -26,6 +26,17 @@ assert.equal(fembed.source, "vdohide");
 assert.equal(fembed.embedUrl, "https://fembed.co/embed/cQxxxxxxx");
 assert.equal(fembed.thumbnailUrl, null);
 
+const cat = normalizeEmbed("https://files.catbox.moe/abc123.mp4");
+assert.equal(cat.source, "catbox");
+assert.equal(cat.embedUrl, "https://files.catbox.moe/abc123.mp4");
+assert.equal(cat.thumbnailUrl, null);
+
+const catWebm = normalizeEmbed("httpS://Files.Catbox.Moe/UPPER.MOV");
+assert.equal(catWebm.embedUrl, "https://files.catbox.moe/UPPER.MOV");
+
+assert.throws(() => normalizeEmbed("https://catbox.moe/user"));
+assert.throws(() => normalizeEmbed("https://files.catbox.moe/image.png", "catbox"));
+
 for (const bad of [
   "https://evil.com/iframe",
   "http://www.anonmp4.to/embed/NLEusIzEvLs3s3B",

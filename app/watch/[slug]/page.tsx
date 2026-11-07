@@ -109,7 +109,7 @@ async function WatchContent({
             })}
           </time>
           <span aria-hidden="true">·</span>
-          <span>Embed {video.source === "anonmp4" ? "anonmp4" : "vdohide"}</span>
+          <span>Embed {video.source}</span>
         </div>
         {video.description && (
           <p className="mt-4 max-w-prose whitespace-pre-line text-[15px] leading-relaxed text-foreground/90">

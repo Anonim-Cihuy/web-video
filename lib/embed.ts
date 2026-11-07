@@ -1,4 +1,4 @@
-export type VideoSource = "vdohide" | "anonmp4";
+export type VideoSource = "vdohide" | "anonmp4" | "catbox";
 
 export type NormalizedEmbed = {
   source: VideoSource;
@@ -9,6 +9,7 @@ export type NormalizedEmbed = {
 const DOMAINS: Record<VideoSource, string[]> = {
   anonmp4: ["anonmp4.art", "anonmp4.to", "anonmp4.help"],
   vdohide: ["vdohide.com", "fembed.co"],
+  catbox: ["catbox.moe"],
 };
 
 const RAW_ID = /^[A-Za-z0-9_-]{6,}$/;
@@ -45,7 +46,7 @@ export function normalizeEmbed(input: string, explicitSource?: VideoSource): Nor
   try {
     url = new URL(raw);
   } catch {
-    throw new Error("URL tidak valid. Tempel embed URL vdohide atau anonmp4.");
+    throw new Error("URL tidak valid. Tempel embed URL vdohide, anonmp4, atau file catbox.moe.");
   }
   if (url.protocol !== "https:") {
     throw new Error("URL wajib memakai https://.");
@@ -54,7 +55,15 @@ export function normalizeEmbed(input: string, explicitSource?: VideoSource): Nor
   const host = url.hostname.toLowerCase();
   const source = hostSource(host);
   if (!source) {
-    throw new Error("URL tidak dikenali. Gunakan embed URL vdohide atau anonmp4.");
+    throw new Error("URL tidak dikenali. Gunakan embed URL vdohide, anonmp4, atau file catbox.moe.");
+  }
+
+  if (source === "catbox") {
+    // catbox hanya share direct file: https://files.catbox.moe/ID.mp4
+    if (url.pathname.split("?")[0].match(/\.(mp4|webm|mov|m4v|ogg|ogv)$/i)) {
+      return { source, embedUrl: url.toString(), thumbnailUrl: null };
+    }
+    throw new Error("Tempel direct link file videonya (https://files.catbox.moe/ID.mp4), bukan halaman situs.");
   }
 
   if (source === "anonmp4") {

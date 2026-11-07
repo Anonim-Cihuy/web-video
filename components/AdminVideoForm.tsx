@@ -47,7 +47,7 @@ export default function AdminVideoForm({
         <label htmlFor="embed" className={label}>Embed URL atau ID</label>
         <input id="embed" name="embed" required defaultValue={defaults.embed} className={input} placeholder="https://www.anonmp4.to/embed/VIDEO_ID" />
         <span className={hint}>
-          anonmp4: tempel /embed/ atau /v/ link, thumbnail terisi otomatis. vdohide: tempel embed URL lengkap.
+          anonmp4: tempel /embed/ atau /v/ link, thumbnail terisi otomatis. vdohide: tempel embed URL lengkap. catbox: tempel direct file URL (.mp4), thumbnail isi manual.
         </span>
       </div>
 
@@ -57,6 +57,7 @@ export default function AdminVideoForm({
           <option value="">Deteksi otomatis dari URL</option>
           <option value="anonmp4">anonmp4</option>
           <option value="vdohide">vdohide</option>
+          <option value="catbox">catbox</option>
         </select>
         <span className={hint}>Pilih manual hanya kalau menempel ID mentah anonmp4.</span>
       </div>

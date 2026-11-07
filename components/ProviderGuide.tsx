@@ -11,6 +11,17 @@ const providers = [
     note: "Upload API (anonmp4api.xyz) mati sejak 2026-11-07, jadi upload lewat situsnya langsung. Thumbnail otomatis aktif lagi lewat https://<host>/thumbs/<id>.webp.",
   },
   {
+    name: "catbox.moe",
+    url: "https://catbox.moe/",
+    quota: "hingga 200 MB per file, tanpa akun",
+    steps: [
+      "Buka catbox.moe, pilih File, drop video (MP4/WebM, max 200 MB).",
+      "Tunggu selesai, dapat direct link format files.catbox.moe/ID.mp4.",
+      "Tempel direct link itu ke form video, isi thumbnail manual.",
+    ],
+    note: "Tanpa iklan, tanpa akun, file permanen. Bukan player pihak ketiga: memakai player native browser di iframe. Film besar tetap lewat vdohide/anonmp4.",
+  },
+  {
     name: "vdohide.com",
     url: "https://vdohide.com/",
     quota: "hingga 10 GB per file, gratis",

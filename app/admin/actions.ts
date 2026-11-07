@@ -48,7 +48,9 @@ function parseVideoForm(formData: FormData) {
   }
 
   const explicitSource: VideoSource | undefined =
-    sourceRaw === "anonmp4" || sourceRaw === "vdohide" ? sourceRaw : undefined;
+    sourceRaw === "anonmp4" || sourceRaw === "vdohide" || sourceRaw === "catbox"
+      ? sourceRaw
+      : undefined;
 
   let embed;
   try {

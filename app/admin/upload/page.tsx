@@ -30,8 +30,9 @@ async function UploadContent() {
       </Link>
       <h1 className="mt-3 text-2xl font-bold tracking-tight">Cara upload video</h1>
       <p className="mt-1 max-w-prose text-sm leading-relaxed text-muted">
-        Video di-host di provider pihak ketiga (gratis). Upload di sana, lalu tempel embed URL-nya
-        ke form di situs ini. Dua langkah, dua menit.
+        Video di-host di provider pihak ketiga (gratis). Upload langsung di kotak Di bawah ini
+        (catbox/anonmp4), atau upload di situs provider sendiri lalu tempel embed URL-nya ke form.
+        Dua menit.
       </p>
       <div className="mt-6">
         <ProviderGuide />
@@ -39,7 +40,7 @@ async function UploadContent() {
       <div className="mt-6 max-w-4xl rounded-xl border border-accent bg-accent-soft p-5">
         <h2 className="text-base font-bold">Setelah dapat embed URL</h2>
         <p className="mt-1 text-sm leading-relaxed text-muted">
-          Tempel di form ini. Untuk anonmp4 thumbnail terisi otomatis; untuk vdohide isi thumbnail manual.
+          Tempel di form ini. Untuk anonmp4 thumbnail terisi otomatis; untuk vdohide/catbox isi thumbnail manual.
         </p>
         <Link
           href="/admin/video/new"

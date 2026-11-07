@@ -13,7 +13,7 @@ create table if not exists videos (
   title text not null check (char_length(title) between 3 and 120),
   description text not null default '' check (char_length(description) <= 2000),
   embed_url text not null check (embed_url ~* '^https://'),
-  source text not null check (source in ('vdohide','anonmp4')),
+  source text not null check (source in ('vdohide','anonmp4','catbox')),
   thumbnail_url text,
   category_id uuid not null references categories(id) on delete restrict,
   views integer not null default 0 check (views >= 0),
