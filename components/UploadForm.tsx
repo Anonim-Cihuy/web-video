@@ -29,6 +29,43 @@ type UploadResult = {
   title: string;
 };
 
+// Ambil 1 frame dari file video lewat <video>+canvas di browser admin
+// (proxy server gak mampu decode video). Frame ~15% durasi / detik 3.
+async function captureThumb(file: File): Promise<Blob | null> {
+  const url = URL.createObjectURL(file);
+  try {
+    const video = document.createElement("video");
+    video.muted = true;
+    video.src = url;
+    await new Promise<void>((resolve, reject) => {
+      video.onloadedmetadata = () => resolve();
+      video.onerror = () => reject(new Error("video gagal dibuka"));
+      setTimeout(() => reject(new Error("timeout buka video")), 15000);
+    });
+    video.currentTime =
+      Number.isFinite(video.duration) && video.duration > 0
+        ? Math.min(3, video.duration * 0.15)
+        : 1;
+    await new Promise<void>((resolve) => {
+      video.onseeked = () => resolve();
+      setTimeout(resolve, 5000);
+    });
+    const canvas = document.createElement("canvas");
+    canvas.width = 640;
+    canvas.height = video.videoWidth
+      ? Math.max(1, Math.round((640 * video.videoHeight) / video.videoWidth))
+      : 360;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    return await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/png"));
+  } catch {
+    return null;
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
 export default function UploadForm() {
   const [provider, setProvider] = useState<UploadProvider>("catbox");
   const [file, setFile] = useState<File | null>(null);
@@ -36,6 +73,7 @@ export default function UploadForm() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<UploadResult | null>(null);
+  const [thumbState, setThumbState] = useState<"idle" | "capture" | "upload" | "done" | "fail">("idle");
   const xhrRef = useRef<XMLHttpRequest | null>(null);
 
   const conf = PROVIDERS[provider];
@@ -81,7 +119,20 @@ export default function UploadForm() {
         // catbox membalas plain text URL direct, bukan JSON
         const url = parsed ? null : text.trim();
         if (xhr.status >= 200 && xhr.status < 300 && url && /^https:\/\/(files\.)?catbox\.moe\//.test(url)) {
-          setResult({ embedUrl: url, thumbnailUrl: null, title: defaultTitle(file!) });
+          const f = file!;
+          setResult({ embedUrl: url, thumbnailUrl: null, title: defaultTitle(f) });
+          // Thumbnail otomatis (catbox): capture frame video di browser, upload PNG-nya ke catbox.
+          setThumbState("capture");
+          (async () => {
+            const blob = await captureThumb(f);
+            if (!blob) return setThumbState("fail");
+            setThumbState("upload");
+            const thumbUrl = await uploadThumbPng(blob);
+            setThumbState(thumbUrl ? "done" : "fail");
+            if (thumbUrl) {
+              setResult((r) => (r && r.embedUrl === url ? { ...r, thumbnailUrl: thumbUrl } : r));
+            }
+          })();
           return;
         }
         setError(`catbox gagal: ${short(text)}`);
@@ -130,6 +181,19 @@ export default function UploadForm() {
     return f.name.replace(/\.[^.]+$/, "");
   }
 
+  async function uploadThumbPng(blob: Blob): Promise<string | null> {
+    try {
+      const body = new FormData();
+      body.append("reqtype", "fileupload");
+      body.append("fileToUpload", new File([blob], "thumbnail.png", { type: "image/png" }));
+      const res = await fetch("/api/admin/upload-catbox", { method: "POST", body });
+      const text = (await res.text()).trim();
+      return res.ok && /^https:\/\/(files\.)?catbox\.moe\//.test(text) ? text : null;
+    } catch {
+      return null;
+    }
+  }
+
   function short(text: string) {
     const t = text.trim().replace(/\s+/g, " ");
     return t.length > 140 ? t.slice(0, 140) + "…" : t || "(respons kosong)";
@@ -150,6 +214,12 @@ export default function UploadForm() {
     return (
       <div className="max-w-2xl rounded-xl border border-border bg-surface p-6">
         <h2 className="text-lg font-bold">Upload berhasil</h2>
+        <p className="mt-1 text-xs text-muted" role="status" aria-live="polite">
+          {thumbState === "capture" && "Membuat thumbnail otomatis…"}
+          {thumbState === "upload" && "Mengupload thumbnail…"}
+          {thumbState === "done" && "Thumbnail otomatis siap ✓"}
+          {thumbState === "fail" && "Thumbnail otomatis gagal — isi manual di form."}
+        </p>
         <label htmlFor="embed-out" className="mt-4 block text-sm font-medium">Link video</label>
         <input id="embed-out" readOnly value={result.embedUrl} className="mt-1.5 h-11 w-full rounded-lg border border-border bg-background px-3 text-sm" onFocus={(e) => e.target.select()} />
         <Link
