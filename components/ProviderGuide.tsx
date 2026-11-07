@@ -15,11 +15,11 @@ const providers = [
     url: "https://catbox.moe/",
     quota: "hingga 200 MB per file, tanpa akun",
     steps: [
-      "Buka catbox.moe, pilih File, drop video (MP4/WebM, max 200 MB).",
-      "Tunggu selesai, dapat direct link format files.catbox.moe/ID.mp4.",
-      "Tempel direct link itu ke form video, isi thumbnail manual.",
+      "Buka catbox.moe (atau upload langsung lewat halaman Upload di sini, max 200 MB).",
+      "Dapat direct link format files.catbox.moe/ID.mp4.",
+      "Thumbnail otomatis keisi saat upload lewat situs ini; kalau tempel manual, isi thumbnail sendiri.",
     ],
-    note: "Tanpa iklan, tanpa akun, file permanen. Bukan player pihak ketiga: memakai player native browser di iframe. Film besar tetap lewat vdohide/anonmp4.",
+    note: "Tanpa iklan, tanpa akun, file permanen. Bukan player pihak ketiga: memakai player native browser di iframe. Thumbnail otomatis saat upload lewat halaman Upload di sini (max 200 MB). Film besar tetap lewat vdohide/anonmp4.",
   },
   {
     name: "vdohide.com",
