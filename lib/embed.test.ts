@@ -26,6 +26,14 @@ assert.equal(fembed.source, "vdohide");
 assert.equal(fembed.embedUrl, "https://fembed.co/embed/cQxxxxxxx");
 assert.equal(fembed.thumbnailUrl, null);
 
+const dood = normalizeEmbed("https://dood.to/e/98zukoh5jqiw");
+assert.equal(dood.source, "doodstream");
+assert.equal(dood.embedUrl, "https://dood.to/e/98zukoh5jqiw");
+assert.equal(dood.thumbnailUrl, "https://img.doodcdn.io/snaps/98zukoh5jqiw.jpg");
+
+const doodDownload = normalizeEmbed("https://www.dood.so/d/98zukoh5jqiw");
+assert.equal(doodDownload.embedUrl, "https://www.dood.so/e/98zukoh5jqiw");
+
 const cat = normalizeEmbed("https://files.catbox.moe/abc123.mp4");
 assert.equal(cat.source, "catbox");
 assert.equal(cat.embedUrl, "https://files.catbox.moe/abc123.mp4");

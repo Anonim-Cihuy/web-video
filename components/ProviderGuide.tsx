@@ -22,6 +22,17 @@ const providers = [
     note: "Tanpa iklan, tanpa akun, file permanen. Bukan player pihak ketiga: memakai player native browser di iframe. Thumbnail otomatis saat upload lewat halaman Upload di sini (max 200 MB). Film besar tetap lewat vdohide/anonmp4.",
   },
   {
+    name: "doodstream.com",
+    url: "https://doodstream.com/",
+    quota: "unlimited storage; video gratis bisa dihapus setelah 60 hari tidak aktif",
+    steps: [
+      "Buka doodstream.com, upload videonya langsung di situsnya.",
+      "Setelah selesai, copy embed URL-nya (format: doodstream.com/e/FILE_CODE).",
+      "Tempel embed URL-nya di form video di sini. Thumbnail terisi otomatis.",
+    ],
+    note: "Upload manual di doodstream.com — situs ini tidak meng-upload ke DoodStream. Video gratis yang tidak aktif bisa dihapus; pakai premium kalau harus permanen. Format: mp4, mkv, webm, avi, mov.",
+  },
+  {
     name: "vdohide.com",
     url: "https://vdohide.com/",
     quota: "hingga 10 GB per file, gratis",

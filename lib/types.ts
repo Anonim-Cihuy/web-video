@@ -10,7 +10,7 @@ export type Video = {
   title: string;
   description: string;
   embed_url: string;
-  source: "vdohide" | "anonmp4" | "catbox";
+  source: "vdohide" | "anonmp4" | "catbox" | "doodstream";
   thumbnail_url: string | null;
   category_id: string;
   views: number;

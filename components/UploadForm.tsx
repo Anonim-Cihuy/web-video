@@ -140,10 +140,6 @@ export default function UploadForm() {
       }
 
       if (xhr.status >= 200 && xhr.status < 300 && parsed?.success) {
-        if (provider !== "anonmp4") {
-          setError(`Respons ${provider} tidak dikenali. Cek situs provider.`);
-          return;
-        }
         const videoId = typeof parsed.video_id === "string" ? parsed.video_id : undefined;
         const embedUrl =
           (typeof parsed.embed_url === "string" && parsed.embed_url) ||

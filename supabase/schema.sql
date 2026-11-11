@@ -13,13 +13,16 @@ create table if not exists videos (
   title text not null check (char_length(title) between 3 and 120),
   description text not null default '' check (char_length(description) <= 2000),
   embed_url text not null check (embed_url ~* '^https://'),
-  source text not null check (source in ('vdohide','anonmp4','catbox')),
+  source text not null check (source in ('vdohide','anonmp4','catbox','doodstream')),
   thumbnail_url text,
   category_id uuid not null references categories(id) on delete restrict,
   views integer not null default 0 check (views >= 0),
   featured boolean not null default false,
   created_at timestamptz not null default now()
 );
+
+alter table videos drop constraint if exists videos_source_check;
+alter table videos add constraint videos_source_check check (source in ('vdohide','anonmp4','catbox','doodstream'));
 
 create index if not exists videos_category_idx on videos(category_id);
 create index if not exists videos_created_idx on videos(created_at desc);

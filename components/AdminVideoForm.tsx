@@ -46,9 +46,9 @@ export default function AdminVideoForm({
 
       <div className="flex flex-col gap-1.5">
         <label htmlFor="embed" className={label}>Embed URL atau ID</label>
-        <input id="embed" name="embed" required defaultValue={defaults.embed} className={input} placeholder="https://www.anonmp4.to/embed/VIDEO_ID" />
+        <input id="embed" name="embed" required defaultValue={defaults.embed} className={input} placeholder="https://dood.to/e/VIDEO_ID" />
         <span className={hint}>
-          anonmp4: tempel /embed/ atau /v/ link, thumbnail terisi otomatis. vdohide: tempel embed URL lengkap. catbox: tempel direct file URL (.mp4), thumbnail isi manual.
+          anonmp4: tempel /embed/ atau /v/ link, thumbnail terisi otomatis. vdohide: tempel embed URL lengkap. catbox: tempel direct file URL (.mp4). doodstream: tempel /e/ atau /d/ link.
         </span>
       </div>
 
@@ -59,8 +59,9 @@ export default function AdminVideoForm({
           <option value="anonmp4">anonmp4</option>
           <option value="vdohide">vdohide</option>
           <option value="catbox">catbox</option>
+          <option value="doodstream">doodstream</option>
         </select>
-        <span className={hint}>Pilih manual hanya kalau menempel ID mentah anonmp4.</span>
+        <span className={hint}>Pilih manual hanya kalau menempel ID mentah anonmp4/doodstream.</span>
       </div>
 
       <div className="flex flex-col gap-1.5">
