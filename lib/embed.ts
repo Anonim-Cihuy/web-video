@@ -12,7 +12,7 @@ const DOMAINS: Record<VideoSource, string[]> = {
   catbox: ["catbox.moe"],
   doodstream: ["doodstream.com"],
 };
-const DOOD_HOST = /^(www\.)?dood(?:stream)?\.[a-z0-9-]{2,}$/i;
+const DOOD_HOST = /^(www\.)?(dood(?:stream)?\.[a-z0-9-]{2,}|playmogo\.com)$/i;
 const DOOD_EMBED = /^\/(?:e|d|embed)\/([A-Za-z0-9_-]{6,})\/?$/;
 
 const RAW_ID = /^[A-Za-z0-9_-]{6,}$/;

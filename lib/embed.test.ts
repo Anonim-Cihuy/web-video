@@ -34,6 +34,11 @@ assert.equal(dood.thumbnailUrl, "https://img.doodcdn.io/snaps/98zukoh5jqiw.jpg")
 const doodDownload = normalizeEmbed("https://www.dood.so/d/98zukoh5jqiw");
 assert.equal(doodDownload.embedUrl, "https://www.dood.so/e/98zukoh5jqiw");
 
+const doodPlaymogo = normalizeEmbed("https://playmogo.com/e/tnnuxxxx1");
+assert.equal(doodPlaymogo.source, "doodstream");
+assert.equal(doodPlaymogo.embedUrl, "https://playmogo.com/e/tnnuxxxx1");
+assert.equal(doodPlaymogo.thumbnailUrl, "https://img.doodcdn.io/snaps/tnnuxxxx1.jpg");
+
 const cat = normalizeEmbed("https://files.catbox.moe/abc123.mp4");
 assert.equal(cat.source, "catbox");
 assert.equal(cat.embedUrl, "https://files.catbox.moe/abc123.mp4");
