@@ -50,8 +50,11 @@ assert.equal(catWebm.embedUrl, "https://files.catbox.moe/UPPER.MOV");
 assert.throws(() => normalizeEmbed("https://catbox.moe/user"));
 assert.throws(() => normalizeEmbed("https://files.catbox.moe/image.png", "catbox"));
 
+const anyHost = normalizeEmbed("https://evil.com/iframe");
+assert.equal(anyHost.source, "other");
+assert.equal(anyHost.embedUrl, "https://evil.com/iframe");
+
 for (const bad of [
-  "https://evil.com/iframe",
   "http://www.anonmp4.to/embed/NLEusIzEvLs3s3B",
   "javascript:alert(1)",
   "",

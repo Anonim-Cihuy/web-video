@@ -48,7 +48,7 @@ export default function AdminVideoForm({
         <label htmlFor="embed" className={label}>Embed URL atau ID</label>
         <input id="embed" name="embed" required defaultValue={defaults.embed} className={input} placeholder="https://dood.to/e/VIDEO_ID" />
         <span className={hint}>
-          anonmp4: tempel /embed/ atau /v/ link, thumbnail terisi otomatis. vdohide: tempel embed URL lengkap. catbox: tempel direct file URL (.mp4). doodstream: tempel /e/ atau /d/ link.
+          Tempel embed URL dari mana pun (https). Link video langsung (.mp4/.webm/.mov) diputar native; lainnya diembed iframe. anonmp4/doodstream: tempel /embed/ atau /e/ link, thumbnail terisi otomatis.
         </span>
       </div>
 

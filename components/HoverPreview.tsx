@@ -16,6 +16,8 @@ function autoplayUrl(embedUrl: string): string {
   }
 }
 
+const DIRECT_VIDEO = /\.(mp4|webm|mov|m4v|ogg|ogv)(\?.*)?(#.*)?$/i;
+
 export default function HoverPreview({
   video,
   alt,
@@ -43,7 +45,7 @@ export default function HoverPreview({
         className={className}
       />
       {active &&
-        (video.source === "catbox" ? (
+        (DIRECT_VIDEO.test(video.embed_url) ? (
           <video
             ref={(el) => {
               if (el) el.muted = true;

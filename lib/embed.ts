@@ -1,4 +1,4 @@
-export type VideoSource = "vdohide" | "anonmp4" | "catbox" | "doodstream";
+export type VideoSource = "vdohide" | "anonmp4" | "catbox" | "doodstream" | "other";
 
 export type NormalizedEmbed = {
   source: VideoSource;
@@ -6,7 +6,7 @@ export type NormalizedEmbed = {
   thumbnailUrl: string | null;
 };
 
-const DOMAINS: Record<VideoSource, string[]> = {
+const DOMAINS: Record<Exclude<VideoSource, "other">, string[]> = {
   anonmp4: ["anonmp4.art", "anonmp4.to", "anonmp4.help"],
   vdohide: ["vdohide.com", "fembed.co"],
   catbox: ["catbox.moe"],
@@ -24,7 +24,7 @@ function hostMatches(host: string, domain: string): boolean {
 
 function hostSource(host: string): VideoSource | null {
   if (DOOD_HOST.test(host)) return "doodstream";
-  for (const source of Object.keys(DOMAINS) as VideoSource[]) {
+  for (const source of Object.keys(DOMAINS) as Exclude<VideoSource, "other">[]) {
     if (DOMAINS[source].some((d) => hostMatches(host, d))) return source;
   }
   return null;
@@ -53,7 +53,7 @@ export function normalizeEmbed(input: string, explicitSource?: VideoSource): Nor
   try {
     url = new URL(raw);
   } catch {
-    throw new Error("URL tidak valid. Tempel embed URL vdohide, anonmp4, catbox, atau DoodStream.");
+    throw new Error("URL tidak valid. Tempel URL embed (https) dari mana pun.");
   }
   if (url.protocol !== "https:") {
     throw new Error("URL wajib memakai https://.");
@@ -61,8 +61,9 @@ export function normalizeEmbed(input: string, explicitSource?: VideoSource): Nor
 
   const host = url.hostname.toLowerCase();
   const source = hostSource(host);
+  // Host tak dikenal: terima embed bebas selama https (admin-only input).
   if (!source) {
-    throw new Error("URL tidak dikenali. Gunakan embed URL vdohide, anonmp4, file catbox.moe, atau DoodStream.");
+    return { source: "other", embedUrl: url.toString(), thumbnailUrl: null };
   }
 
   if (source === "catbox") {
