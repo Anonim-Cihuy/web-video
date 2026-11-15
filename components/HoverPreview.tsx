@@ -9,6 +9,7 @@ function autoplayUrl(embedUrl: string): string {
     const u = new URL(embedUrl);
     u.searchParams.set("autoplay", "1");
     u.searchParams.set("mute", "1");
+    u.searchParams.set("muted", "1");
     return u.toString();
   } catch {
     return embedUrl;
@@ -44,6 +45,9 @@ export default function HoverPreview({
       {active &&
         (video.source === "catbox" ? (
           <video
+            ref={(el) => {
+              if (el) el.muted = true;
+            }}
             src={video.embed_url}
             autoPlay
             muted
