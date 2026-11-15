@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Video } from "@/lib/types";
-import ThumbImage from "./ThumbImage";
+import HoverPreview from "./HoverPreview";
 
 export default function VideoCard({ video }: { video: Video }) {
   return (
@@ -9,10 +9,9 @@ export default function VideoCard({ video }: { video: Video }) {
       className="group flex flex-col overflow-hidden rounded-xl border border-border bg-surface transition-transform duration-200 hover:-translate-y-0.5"
     >
       <div className="relative aspect-video overflow-hidden bg-surface-2">
-        <ThumbImage
-          src={video.thumbnail_url}
+        <HoverPreview
+          video={video}
           alt={`Thumbnail ${video.title}`}
-          loading="lazy"
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
         />
       </div>

@@ -6,7 +6,7 @@ import type { Video } from "@/lib/types";
 import CategoryChips from "@/components/CategoryChips";
 import VideoGrid from "@/components/VideoGrid";
 import { SkeletonGrid } from "@/components/SkeletonCard";
-import ThumbImage from "@/components/ThumbImage";
+import HoverPreview from "@/components/HoverPreview";
 
 export default function HomePage(props: PageProps<"/">) {
   return (
@@ -141,8 +141,8 @@ function Hero({ video }: { video: Video }) {
         className="group relative block overflow-hidden rounded-2xl border border-border lg:col-span-3"
         aria-label={`Tonton ${video.title}`}
       >
-        <ThumbImage
-          src={video.thumbnail_url}
+        <HoverPreview
+          video={video}
           alt={`Thumbnail ${video.title}`}
           fetchPriority="high"
           className="aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
